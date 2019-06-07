@@ -1,19 +1,18 @@
 #include "Localizacao.h"
 #include "Arduino.h"
-#include "Movimentacao.h"
+//#include "Movimentacao.h"
 #include "Configuracao.h"
 
-#define LIMIAR_DE_MODULARIZACAO 500
-
-Localizacao::Localizacao(int pino)
+Localizacao::Localizacao(const int pin, const int numreadings) : numReadings(numreadings)
 {
-    this->Pino = pino;
+    this->Pin = pin;
+    this->readings = new int[numReadings];
     for (int i = 0; i < this->numReadings; i++) {
         this->readings[i] = 0;
     }
 }
 
-int Localizacao::RetornaSinal()
+float Localizacao::RetornaSinal()
 {
     this->total = this->total - readings[this->readIndex];
     int sig =  analogRead(this->Pino) - LIMIAR_DE_MODULARIZACAO;
@@ -51,4 +50,10 @@ bool Localizacao::EstaAlinhado()
         return false;
     }
     
+}
+
+Localizacao::~Localizacao()
+{
+    delete[] this->readings;
+    this->readings = NULL;
 }
