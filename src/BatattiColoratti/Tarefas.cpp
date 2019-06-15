@@ -3,6 +3,7 @@
 #include "SeguidorDeLinha.h"
 #include "Localizacao.h"
 #include "Tarefas.h"
+#include "Encoder.h"
 
 void Tarefas::ex1() {
   anda(30);
@@ -42,7 +43,10 @@ void Tarefas::ex4() {
 
 
 
-void Tarefas::AlinhaComLampada(){}
+void Tarefas::AlinhaComLampada()
+{
+
+}
 
 void Tarefas::PercorreLinha(int dist){
   anda(dist);
@@ -81,15 +85,5 @@ void Tarefas::ExploraAmbiente(){
 
 void Tarefas::ProcuraMaximo()
 {
-  Localizacao localizacao(DIFERENTIAL_SENSOR_PIN);
-  LEFT_MOTOR->run(LEFT_MOTOR_FORWARD);
-  RIGHT_MOTOR->run(RIGHT_MOTOR_FORWARD);
-  while(true){
-    // controla velocidade
-    if (localizacao.EstaAlinhado())
-    {
-      para();
-      return;
-    }
-  }
+
 }

@@ -1,4 +1,4 @@
-  #ifndef __COLORFUL_MOVIMENTACAO__
+#ifndef __COLORFUL_MOVIMENTACAO__
 #define __COLORFUL_MOVIMENTACAO__
 
 
@@ -23,6 +23,10 @@ void para();
 void anda(int d);
 
 void andaReComDelay();
+
+void GiraHorario();
+
+void GiraAntiHorario();
 
 void gira_sentido_horario(double t);
 

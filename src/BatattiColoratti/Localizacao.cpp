@@ -1,7 +1,8 @@
 #include "Localizacao.h"
 #include "Arduino.h"
-//#include "Movimentacao.h"
+#include "Movimentacao.h"
 #include "Configuracao.h"
+
 
 Localizacao::Localizacao(const int pin, const int numreadings) : numReadings(numreadings)
 {
@@ -12,11 +13,19 @@ Localizacao::Localizacao(const int pin, const int numreadings) : numReadings(num
     }
 }
 
+void Localizacao::begin()
+{
+    for (int i = 0; i < this->numReadings; i++) {
+        this->RetornaSinal();
+        delay(1);
+    }
+}
+
 float Localizacao::RetornaSinal()
 {
-    this->total = this->total - readings[this->readIndex];
-    int sig =  analogRead(this->Pino) - LIMIAR_DE_MODULARIZACAO;
-    sig = (sig <= 0) ? -sig:sig;
+    this->total = this->total - this->readings[this->readIndex];
+    int sig =  analogRead(this->Pin)/* - LIMIAR_DE_MODULARIZACAO*/;
+    //sig = (sig < 0) ? -sig:sig;
 
     this->readings[this->readIndex] = sig;
     this->total = this->total + this->readings[this->readIndex];
@@ -31,25 +40,7 @@ float Localizacao::RetornaSinal()
 
 bool Localizacao::EstaAlinhado()
 {
-    int sinalAnterior = 0;
-    if (this->readIndex == 0)
-    {
-        sinalAnterior = readings[19];
-    } 
-    else
-    {
-        sinalAnterior = readings[this->readIndex -1];
-    }
-    
-    if( this->RetornaSinal() < sinalAnterior)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-    
+    return true;
 }
 
 Localizacao::~Localizacao()

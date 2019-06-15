@@ -58,6 +58,22 @@ void andaReComDelay(int d){
   para();
 }
 
+void GiraHorario()
+{
+  para();
+  //set_speed(int left_speed, int right_speed);
+  LEFT_MOTOR->run(LEFT_MOTOR_FORWARD);
+  RIGHT_MOTOR->run(RIGHT_MOTOR_BACKWARD);
+}
+
+void GiraAntiHorario()
+{
+  para();
+  //set_speed(int left_speed, int right_speed);
+  LEFT_MOTOR->run(LEFT_MOTOR_BACKWARD);
+  RIGHT_MOTOR->run(RIGHT_MOTOR_FORWARD);
+}
+
 void gira_sentido_horario(double t){
   para();
   LEFT_MOTOR->run(LEFT_MOTOR_FORWARD);
