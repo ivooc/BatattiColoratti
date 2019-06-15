@@ -41,11 +41,58 @@ void Tarefas::ex4() {
   gira_sentido_horario(6);
 }
 
-
-
 void Tarefas::AlinhaComLampada()
 {
-
+  int LIMIAR_ALTO = 512;
+  int LIMIAR_BAIXO = 512;
+  Localizacao localizar(DIFERENTIAL_SENSOR_PIN);
+  localizar.begin();
+  encoderMotorDireita.ZeraVoltas();
+  GiraHorario();
+  int sinal = 0;
+  int timesChangedHigh = 0;
+  int timesChangedLow = 0;
+  int voltasAteHigh = 0;
+  int voltasAteLow = 0;
+  int voltasDadas = 0;
+  do
+  {
+    sinal = int(localizar.RetornaSinal());
+    voltasDadas = encoderMotorDireita.RetornaVolta();
+    if (sinal > LIMIAR_ALTO)
+    {
+      LIMIAR_ALTO = sinal;
+      timesChangedHigh++; 
+      voltasAteHigh = voltasDadas;
+    }
+    else if (sinal < LIMIAR_BAIXO)
+    {
+      LIMIAR_BAIXO = sinal;
+      timesChangedLow++;
+      voltasAteLow = voltasDadas;
+    }
+    delay(1);
+  } while (encoderMotorDireita.RetornaVolta() < VOLTAS_EM_360);
+  para();
+  delay(1000);
+  encoderMotorDireita.ZeraVoltas();
+  voltasDadas = 0;
+  GiraHorario();
+  if (timesChangedHigh > timesChangedLow)
+  {
+    while (voltasDadas < voltasAteHigh)
+    {
+      voltasDadas = encoderMotorDireita.RetornaVolta();
+    }
+  }
+  else
+  {
+    while (voltasDadas < voltasAteLow)
+    {
+      voltasDadas = encoderMotorDireita.RetornaVolta();
+    }
+  }
+  para();
 }
 
 void Tarefas::PercorreLinha(int dist){
@@ -80,10 +127,5 @@ void Tarefas::PercorreTriangulo(int dist){
 
 void Tarefas::ExploraAmbiente(){
   SeguidorDeLinha::Seguir(analogRead(LEFT_LINE_SENSOR_PIN), analogRead(RIGHT_LINE_SENSOR_PIN));
-
-}
-
-void Tarefas::ProcuraMaximo()
-{
 
 }

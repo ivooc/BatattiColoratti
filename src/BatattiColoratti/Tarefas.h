@@ -21,8 +21,6 @@ namespace Tarefas {
 	void PercorreTriangulo(int dist);
 	
 	void ExploraAmbiente();
-	
-    void ProcuraMaximo();
 }
 
 

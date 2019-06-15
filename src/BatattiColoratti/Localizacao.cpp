@@ -24,10 +24,7 @@ void Localizacao::begin()
 float Localizacao::RetornaSinal()
 {
     this->total = this->total - this->readings[this->readIndex];
-    int sig =  analogRead(this->Pin)/* - LIMIAR_DE_MODULARIZACAO*/;
-    //sig = (sig < 0) ? -sig:sig;
-
-    this->readings[this->readIndex] = sig;
+    this->readings[this->readIndex] = analogRead(this->Pin);
     this->total = this->total + this->readings[this->readIndex];
     this->readIndex++;  
     if (this->readIndex >= this->numReadings) {
