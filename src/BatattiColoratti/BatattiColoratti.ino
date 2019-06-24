@@ -8,8 +8,6 @@
 
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
-int FLAG_VIRA = 0;
-
 int read_LCD_buttons() {
   int adc_key_in = analogRead(0);      // read the value from the sensor
   if (adc_key_in > 1000) return btnNONE; // We make this the 1st option for speed reasons since it will be the most likely result
@@ -56,21 +54,8 @@ void loop()
     lcd.setCursor(0, 0);
     lcd.print("START ");
     delay(200);
-    int readFlag = 0;
-    while (true)
-    {
-      lcd.setCursor(0, 1);
-      lcd.print("Rodando ");
-      readFlag = Tarefas::ExploraAmbiente(FLAG_VIRA);
-      Serial.println(readFlag);
-      FLAG_VIRA = readFlag;
-      button = read_LCD_buttons();
-      if (button == btnLEFT)
-      {
-         delay(200);
-         break;
-      }
-      delay(100);
-    }
+    lcd.setCursor(0, 1);
+    lcd.print("Rodando ");
+    Tarefas::SegueLinha();
   }
 }

@@ -20,7 +20,7 @@ namespace Tarefas {
 	
 	void PercorreTriangulo(int dist);
 	
-	int ExploraAmbiente(int flag);
+	int SegueLinha();
 }
 
 

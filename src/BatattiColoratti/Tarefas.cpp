@@ -125,7 +125,13 @@ void Tarefas::PercorreTriangulo(int dist){
   para();
 }
 
-int Tarefas::ExploraAmbiente(int flag){
-  int retorno = SeguidorDeLinha::Seguir(analogRead(LEFT_LINE_SENSOR_PIN), analogRead(RIGHT_LINE_SENSOR_PIN), flag);
-  return retorno;
+int Tarefas::SegueLinha(){
+  int readFlag = 0;
+  int flagAnterior = 0;
+  while (true)
+  {
+      readFlag = SeguidorDeLinha::Seguir(analogRead(LEFT_LINE_SENSOR_PIN), analogRead(RIGHT_LINE_SENSOR_PIN), flagAnterior);
+      flagAnterior = readFlag;
+      delay(100);
+  }
 }
