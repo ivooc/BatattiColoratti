@@ -5,7 +5,7 @@
 
 namespace SeguidorDeLinha{
 
-    void Seguir (int esquerda, int direita);
+    int Seguir (int esquerda, int direita, int flag);
     
 } 
 
