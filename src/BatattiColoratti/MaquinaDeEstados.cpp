@@ -19,7 +19,7 @@ int Inicio(){
 int Localiza(){
 
 	Tarefas::AlinhaComLampada();
-
+	delay(1000);
 	return GIRA180;
 }
 

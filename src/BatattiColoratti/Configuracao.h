@@ -14,7 +14,7 @@ const int BLUE_PIN  = 27; // Fio laranja; Fio marrom é o terra
 const int LDR_PIN = A8; // VCC=vermelho, GND=marrom, SIG(A8)=amarelo
 		
 /*      LUZ E LUMINOSA   */		
-const int THRESHOLD_OBSTACULO_DE_LUZ = 100;
+const int THRESHOLD_OBSTACULO_DE_LUZ = 250;
 
 /*      CORES        */
 const char yellow = 'C';
