@@ -1,141 +1,93 @@
 #include "Tarefas.h"
 #include "Movimentacao.h"
 #include "Configuracao.h"
+#include "MaquinaDeEstados.h"
 
-#define INICIO 1 
-#define LOCALIZA 2
-#define GIRA180 3 
-#define SEGUELINHA 4
-#define OLHACOR 5
-#define GIRABASE 6
-#define ANDARETO 7
-#define RECUA 8 
-#define GIRA60 9 
-#define GIRAMENOS60 10  
-#define RETORNABASE 11 
-#define RECUABASE 12
-
-int Inicio(){
-
+Estados Inicio(){
 	if(start == 1){
-
 		return LOCALIZA;
 	}else 
-
 	return INICIO;
 }
 
-int Localiza(){
-
+Estados Localiza(){
 	Tarefas::AlinhaComLampada();
-
 	return GIRA180;
 }
 
-int Gira180(){
-
+Estados Gira180(){
 	gira_sentido_antihorario(12);
-
 	return SEGUELINHA;
 }
 
-
-int SegueLinha(){
-
+Estados SegueLinha(){
 	if(DetectaBloco()){
 		para();
 		return OLHACOR;
 		// zerar variaveis globais de SegueLinha caso saia do estado SegueLinha!! 
 	}else {
-
 		Tarefas::SegueLinha();
 	}
-
 	return OLHACOR;
 }
 
 // IMPLEMENTAR CORES 
-int OlhaCor(){
-
+Estados OlhaCor(){
 	if(black){
-
 		return RECUA; 
 	}else {
-
 		return GIRABASE;
 	}
 }
 
-
-int GiraBase(){
-
+Estados GiraBase(){
 	Tarefas::AlinhaComLampada();
-
 	return RETORNABASE;
 }
 
-
-int RetornaBase(){
-
+Estados RetornaBase(){
 	anda(30);
-
 	return RECUABASE;
 }
 
-int RecuaBase(){
-
+Estados RecuaBase(){
 	anda_re(10);
-
 	return GIRA180;
 }
 
-
-
-int Recua(){
-
+Estados Recua(){
 	anda_re(10);
-
 	return GIRA60;
 }
 
-int Gira60(){
-
+Estados Gira60(){
 	gira_sentido_horario(4);
-
 	return AndaRETO;
 }
 
-int GiraMenos60(){
-
+Estados GiraMenos60(){
 	gira_sentido_antihorario(4);
-
 	return SegueLINHA;
 }
 
-
-int AndaReto(){
-
-
+Estados AndaReto(){
 	anda(4);
-
 	return GIRAMENOS60;
 }
 
-int MaquinaDeEstados(int estadoAtual, float tempo){
-
-
-	if(tempo > 60000){
-
-		return -1;
+Estados MaquinaDeEstados(Estados estadoAtual, float tempo){
+	Estados proximoEstado = estadoAtual;
+	if(tempo >= 60000 || estadoAtual == FIM)
+	{
+		return FIM;
 	}
 	switch(estadoAtual) {
-
 		case INICIO:
 			proximoEstado = Inicio();
 			break;
 		case LOCALIZA:
 			proximoEstado = Localiza();
-			break; 
+			break;
 		case GIRA180:
 			proximoEstado = Gira180();
 			break;
@@ -144,7 +96,7 @@ int MaquinaDeEstados(int estadoAtual, float tempo){
 			break;
 		case GIRABASE:
 			proximoEstado = GiraBase();
-			break; 
+			break;
 		case RETORNABASE:
 			proximoEstado = RetornaBase();
 			break;
@@ -153,19 +105,17 @@ int MaquinaDeEstados(int estadoAtual, float tempo){
 			break;
 		case RECUA:
 			proximoEstado = Recua();
-			break; 
+			break;
 		case GIRA60:
 			proximoEstado = Gira60();
 			break;
 		case ANDARETO:
 			proximoEstado = AndaReto();
-			break; 
+			break;
 		case GIRAMENOS60:
 			proximoEstado = GiraMenos60();
-			break;				 
-
-
+			break;
 	}
+	return proximoEstado;
+}
 
-
-return proximoEstado;

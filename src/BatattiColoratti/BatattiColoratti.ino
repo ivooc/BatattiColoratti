@@ -6,6 +6,7 @@
 //#include "Arduino.h"
 #include "Tarefas.h"
 #include "SensorDeLuz.h"
+#include "MaquinaDeEstados.h"
 
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
