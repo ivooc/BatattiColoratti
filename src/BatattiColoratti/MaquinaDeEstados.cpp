@@ -52,6 +52,13 @@ int SegueLinha(){
 // IMPLEMENTAR CORES 
 int OlhaCor(){
 
+
+  	digitalWrite(RED_PIN, LOW);
+  	digitalWrite(GREEN_PIN, LOW);
+  	digitalWrite(BLUE_PIN, LOW);
+  	delay(100);
+
+
 	char cor = DetectaCor();
 	if(cor == black || cor == green){
 
@@ -60,6 +67,13 @@ int OlhaCor(){
 
 		return GIRABASE;
 	}
+
+
+  	digitalWrite(RED_PIN, HIGH);
+  	digitalWrite(GREEN_PIN, HIGH);
+  	digitalWrite(BLUE_PIN, HIGH);
+  	delay(10);
+
 }
 
 

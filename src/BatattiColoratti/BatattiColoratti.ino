@@ -41,6 +41,7 @@ void setup()
   Serial.begin(115200);
   attachInterrupt(digitalPinToInterrupt(LEFT_ENCODER_PIN), leftMotorInterruptHandler , RISING );
   attachInterrupt(digitalPinToInterrupt(RIGHT_ENCODER_PIN), rightMotorInterruptHandler , RISING );
+  SENSORDELUZ_SETUP();
   SETUP_MOVIMENTACAO();
   LEFT_MOTOR->setSpeed(DEFAULT_LEFT_PWM_SPEED);
   RIGHT_MOTOR->setSpeed(DEFAULT_RIGHT_PWM_SPEED);

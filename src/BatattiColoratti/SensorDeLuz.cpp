@@ -73,6 +73,7 @@ void DetectaCorEmSerial(){
 }
 
 bool DetectaObjeto(){
+
   int LUZ_ATUAL = analogRead(LDR_PIN);
   //return (LUZ_ATUAL - INTENISADE_LUZ_AMBIENTE < THRESHOLD_OBSTACULO_DE_LUZ);
   return (LUZ_ATUAL > THRESHOLD_OBSTACULO_DE_LUZ);
@@ -134,7 +135,11 @@ void SENSORDELUZ_SETUP(){
   pinMode(LDR_PIN, INPUT);
   INTENISADE_LUZ_AMBIENTE = analogRead(LDR_PIN);
   // initialize serial communication with computer:
-  Serial.begin(115200);
+
+  digitalWrite(RED_PIN, HIGH);
+  digitalWrite(GREEN_PIN, HIGH);
+  digitalWrite(BLUE_PIN, HIGH);
+
 }
 
 bool AconteceuLargada()
