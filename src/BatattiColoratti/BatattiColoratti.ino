@@ -44,7 +44,6 @@ void setup()
   SETUP_MOVIMENTACAO();
   LEFT_MOTOR->setSpeed(DEFAULT_LEFT_PWM_SPEED);
   RIGHT_MOTOR->setSpeed(DEFAULT_RIGHT_PWM_SPEED);
-  pinMode(15,INPUT); //LDR DE INICIO
   
 
 } 
@@ -61,9 +60,9 @@ void loop()
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("Aguardando Partida");
-    int start = analogRead(15);
+    int start = analogRead(LDR_LARGADA);
     while(start < 700){
-      start = analogRead(15);
+      start = analogRead(LDR_LARGADA);
       Serial.println(start);
       }
   
