@@ -4,7 +4,7 @@
 #include "SensorDeLuz.h"
 #include "MaquinaDeEstados.h"
 
-int SegueLinha_flag = 0 ;
+// int SegueLinha_flag = 0 ;
 /*
 int Inicio(){
 
@@ -35,15 +35,17 @@ int SegueLinha(){
 
 	if(DetectaObjeto()){
 		para();
-    SegueLinha_flag = 0;
-
+    	// SegueLinha_flag = 0;
+		Tarefas::SetarFlagLinha(0);
 		return OLHACOR;
 		// zerar variaveis globais de SegueLinha caso saia do estado SegueLinha!! 
 	}else {
 
-		SegueLinha_flag = Tarefas::SegueLinha(SegueLinha_flag);
+		//SegueLinha_flag = Tarefas::SegueLinha(SegueLinha_flag);
+		Tarefas::SegueLinha();
+		 
 	}
-
+	delay(10);
 	return SEGUELINHA;
 }
 

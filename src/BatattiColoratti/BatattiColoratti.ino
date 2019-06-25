@@ -92,7 +92,6 @@ void loop()
 void testeLArgada()
 {
   while(true){
-
-  Serial.println(AconteceuLargada());
+    Serial.println(AconteceuLargada());
   }
 }
