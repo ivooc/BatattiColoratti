@@ -5,6 +5,7 @@
 #include <LiquidCrystal.h>
 //#include "Arduino.h"
 #include "Tarefas.h"
+#include "SensorDeLuz.h"
 
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
@@ -59,3 +60,14 @@ void loop()
     Tarefas::SegueLinha();
   }
 }
+
+
+void testeLArgada()
+{
+  while(true){
+
+  Serial.println(AconteceuLargada());
+  }
+}
+
+

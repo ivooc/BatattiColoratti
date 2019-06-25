@@ -82,4 +82,7 @@ const int RIGHT_MOTOR_INPUT = 2; // FIO PRETO PRIMEIRO
 #define LIMIAR_DE_MODULARIZACAO 500
 const int VOLTAS_EM_360 = 167;
 
+#define LARGADA_PINO 51
+
+
 #endif 
