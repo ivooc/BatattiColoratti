@@ -75,7 +75,7 @@ void DetectaCorEmSerial(){
 bool DetectaObjeto(){
   int LUZ_ATUAL = analogRead(LDR_PIN);
   //return (LUZ_ATUAL - INTENISADE_LUZ_AMBIENTE < THRESHOLD_OBSTACULO_DE_LUZ);
-  return (LUZ_ATUAL < THRESHOLD_OBSTACULO_DE_LUZ);
+  return (LUZ_ATUAL > THRESHOLD_OBSTACULO_DE_LUZ);
 }
 
 char DetectaCor(){
