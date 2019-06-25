@@ -3,8 +3,12 @@
 #include "Configuracao.h"
 #include "SensorDeLuz.h"
 #include "MaquinaDeEstados.h"
+#include "Arduino.h"
+#include <LiquidCrystal.h>
 
-// int SegueLinha_flag = 0 ;
+LiquidCrystal lcd9(8, 9, 4, 5, 6, 7);
+
+//int SegueLinha_flag = 0 ;
 /*
 int Inicio(){
 
@@ -16,6 +20,8 @@ int Inicio(){
 	return INICIO;
 }
 */
+
+
 int Localiza(){
 
 	Tarefas::AlinhaComLampada();
@@ -32,18 +38,14 @@ int Gira180(){
 
 
 int SegueLinha(){
-
+	lcd9.begin(16, 2);
+	lcd9.setCursor(8, 1);
 	if(DetectaObjeto()){
+		lcd9.print("DETECTEI");
 		para();
-    	// SegueLinha_flag = 0;
-		Tarefas::SetarFlagLinha(0);
 		return OLHACOR;
-		// zerar variaveis globais de SegueLinha caso saia do estado SegueLinha!! 
 	}else {
-
-		//SegueLinha_flag = Tarefas::SegueLinha(SegueLinha_flag);
-		Tarefas::SegueLinha();
-		 
+		Tarefas::SegueLinha();		 
 	}
 	delay(10);
 	return SEGUELINHA;
@@ -60,19 +62,19 @@ int OlhaCor(){
 
 
 	char cor = DetectaCor();
-	if(cor == black || cor == green){
+
+	digitalWrite(RED_PIN, HIGH);
+  	digitalWrite(GREEN_PIN, HIGH);
+  	digitalWrite(BLUE_PIN, HIGH);
+  	delay(10);
+	
+	if(cor == black || cor == yellow){
 
 		return RECUA; 
 	}else {
 
 		return GIRABASE;
 	}
-
-
-  	digitalWrite(RED_PIN, HIGH);
-  	digitalWrite(GREEN_PIN, HIGH);
-  	digitalWrite(BLUE_PIN, HIGH);
-  	delay(10);
 
 }
 
@@ -169,7 +171,10 @@ int MaquinaDeEstados(int estadoAtual){
 			break; 
 		case GIRAMENOS60:
 			proximoEstado = GiraMenos60();
-			break;				 
+			break;	
+		case OLHACOR:
+			proximoEstado = OlhaCor();
+			break;			 
 
 
 	}
