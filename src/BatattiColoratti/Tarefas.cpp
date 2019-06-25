@@ -128,6 +128,7 @@ void Tarefas::PercorreTriangulo(int dist){
 int Tarefas::SegueLinha(){
   int readFlag = 0;
   int flagAnterior = 0;
+  //Colocar variaveis como globais e retirar while
   while (true)
   {
       readFlag = SeguidorDeLinha::Seguir(analogRead(LEFT_LINE_SENSOR_PIN), analogRead(RIGHT_LINE_SENSOR_PIN), flagAnterior);
