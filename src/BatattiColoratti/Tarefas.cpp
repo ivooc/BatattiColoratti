@@ -4,6 +4,9 @@
 #include "Localizacao.h"
 #include "Tarefas.h"
 #include "Encoder.h"
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd99(8, 9, 4, 5, 6, 7);
 
 void Tarefas::ex1() {
   anda(30);
@@ -43,53 +46,68 @@ void Tarefas::ex4() {
 
 void Tarefas::AlinhaComLampada()
 {
+  lcd99.begin(16, 2);
   int LIMIAR_ALTO = 512;
   int LIMIAR_BAIXO = 512;
   Localizacao localizar(DIFERENTIAL_SENSOR_PIN);
   localizar.begin();
-  encoderMotorDireita.ZeraVoltas();
+  //encoderMotorDireita.ZeraVoltas();
   GiraHorario();
+  unsigned long tempoSetPoint = millis();
   int sinal = 0;
   int timesChangedHigh = 0;
   int timesChangedLow = 0;
-  int voltasAteHigh = 0;
-  int voltasAteLow = 0;
-  int voltasDadas = 0;
+  //int voltasAteHigh = 0;
+  //int voltasAteLow = 0;
+  //int voltasDadas = 0;
+  unsigned long tempoAteHigh = 0;
+  unsigned long tempoAteLow = 0;
+  unsigned long tempoPassado = 0;
   do
   {
     sinal = int(localizar.RetornaSinal());
-    voltasDadas = encoderMotorDireita.RetornaVolta();
+    //voltasDadas = encoderMotorDireita.RetornaVolta();
+    tempoPassado = millis() - tempoSetPoint;
+    //lcd99.setCursor(0, 0);
+    //lcd99.print(voltasDadas);
+    //lcd99.setCursor(8, 0);
+    //lcd99.print(encoderMotorEsquerda.RetornaVolta());
     if (sinal > LIMIAR_ALTO)
     {
       LIMIAR_ALTO = sinal;
       timesChangedHigh++; 
-      voltasAteHigh = voltasDadas;
+      //voltasAteHigh = voltasDadas;
+      tempoAteHigh = tempoPassado;
     }
     else if (sinal < LIMIAR_BAIXO)
     {
       LIMIAR_BAIXO = sinal;
       timesChangedLow++;
-      voltasAteLow = voltasDadas;
+      //voltasAteLow = voltasDadas;
+      tempoAteLow = tempoPassado;
     }
     delay(1);
-  } while (encoderMotorDireita.RetornaVolta() < VOLTAS_EM_360);
+  } while (millis() - tempoSetPoint < TEMPO_PARA_360/*encoderMotorDireita.RetornaVolta() < VOLTAS_EM_360*/);
   para();
   delay(1000);
-  encoderMotorDireita.ZeraVoltas();
-  voltasDadas = 0;
+  //encoderMotorDireita.ZeraVoltas();
+  //voltasDadas = 0;
   GiraHorario();
+  tempoSetPoint = millis();
   if (timesChangedHigh > timesChangedLow)
   {
-    while (voltasDadas < voltasAteHigh)
+    while (millis() - tempoSetPoint < tempoAteHigh/*voltasDadas < voltasAteHigh*/)
     {
-      voltasDadas = encoderMotorDireita.RetornaVolta();
+      //voltasDadas = encoderMotorDireita.RetornaVolta();
+      delay(5);
     }
   }
   else
   {
-    while (voltasDadas < voltasAteLow)
+    while (millis() - tempoSetPoint < tempoAteLow/*voltasDadas < voltasAteLow*/)
     {
-      voltasDadas = encoderMotorDireita.RetornaVolta();
+      //voltasDadas = encoderMotorDireita.RetornaVolta();
+      delay(5);
     }
   }
   para();
@@ -125,14 +143,8 @@ void Tarefas::PercorreTriangulo(int dist){
   para();
 }
 
-int Tarefas::SegueLinha(){
-  int readFlag = 0;
-  int flagAnterior = 0;
-  //Colocar variaveis como globais e retirar while
-  while (true)
-  {
-      readFlag = SeguidorDeLinha::Seguir(analogRead(LEFT_LINE_SENSOR_PIN), analogRead(RIGHT_LINE_SENSOR_PIN), flagAnterior);
-      flagAnterior = readFlag;
+int Tarefas::SegueLinha(int flagAnterior){
+      int readFlag = SeguidorDeLinha::Seguir(analogRead(LEFT_LINE_SENSOR_PIN), analogRead(RIGHT_LINE_SENSOR_PIN), flagAnterior);
       delay(100);
-  }
+      return readFlag;
 }

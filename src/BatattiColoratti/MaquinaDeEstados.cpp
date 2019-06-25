@@ -1,20 +1,11 @@
 #include "Tarefas.h"
 #include "Movimentacao.h"
 #include "Configuracao.h"
+#include "SensorDeLuz.h"
+#include "MaquinaDeEstados.h"
 
-#define INICIO 1 
-#define LOCALIZA 2
-#define GIRA180 3 
-#define SEGUELINHA 4
-#define OLHACOR 5
-#define GIRABASE 6
-#define ANDARETO 7
-#define RECUA 8 
-#define GIRA60 9 
-#define GIRAMENOS60 10  
-#define RETORNABASE 11 
-#define RECUABASE 12
-
+int SegueLinha_flag = 0 ;
+/*
 int Inicio(){
 
 	if(start == 1){
@@ -24,7 +15,7 @@ int Inicio(){
 
 	return INICIO;
 }
-
+*/
 int Localiza(){
 
 	Tarefas::AlinhaComLampada();
@@ -42,22 +33,25 @@ int Gira180(){
 
 int SegueLinha(){
 
-	if(DetectaBloco()){
+	if(DetectaObjeto()){
 		para();
+    SegueLinha_flag = 0;
+
 		return OLHACOR;
 		// zerar variaveis globais de SegueLinha caso saia do estado SegueLinha!! 
 	}else {
 
-		Tarefas::SegueLinha();
+		SegueLinha_flag = Tarefas::SegueLinha(SegueLinha_flag);
 	}
 
-	return OLHACOR;
+	return SEGUELINHA;
 }
 
 // IMPLEMENTAR CORES 
 int OlhaCor(){
 
-	if(black){
+	char cor = DetectaCor();
+	if(cor == black || cor == green){
 
 		return RECUA; 
 	}else {
@@ -102,14 +96,14 @@ int Gira60(){
 
 	gira_sentido_horario(4);
 
-	return AndaRETO;
+	return ANDARETO;
 }
 
 int GiraMenos60(){
 
 	gira_sentido_antihorario(4);
 
-	return SegueLINHA;
+	return SEGUELINHA;
 }
 
 
@@ -121,18 +115,15 @@ int AndaReto(){
 	return GIRAMENOS60;
 }
 
-int MaquinaDeEstados(int estadoAtual, float tempo){
+int MaquinaDeEstados(int estadoAtual){
 
+  int proximoEstado;
 
-	if(tempo > 60000){
-
-		return -1;
-	}
 	switch(estadoAtual) {
 
-		case INICIO:
-			proximoEstado = Inicio();
-			break;
+	//	case INICIO:
+		//	proximoEstado = Inicio();
+		//	break;
 		case LOCALIZA:
 			proximoEstado = Localiza();
 			break; 
@@ -169,3 +160,5 @@ int MaquinaDeEstados(int estadoAtual, float tempo){
 
 
 return proximoEstado;
+
+}

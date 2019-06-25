@@ -84,5 +84,21 @@ const int VOLTAS_EM_360 = 167;
 
 #define LARGADA_PINO 51
 
+// ESTADOS DA MAQUINA DE ESTADOS 
+
+#define INICIO 1 
+#define LOCALIZA 2
+#define GIRA180 3 
+#define SEGUELINHA 4
+#define OLHACOR 5
+#define GIRABASE 6
+#define ANDARETO 7
+#define RECUA 8 
+#define GIRA60 9 
+#define GIRAMENOS60 10  
+#define RETORNABASE 11 
+#define RECUABASE 12
+
+#define TEMPO_PARA_360 (24*TEMPO_GIRA)
 
 #endif 

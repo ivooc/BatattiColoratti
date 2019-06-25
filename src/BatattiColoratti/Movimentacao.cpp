@@ -49,7 +49,7 @@ void andaReComDelay()
   RIGHT_MOTOR->run(RIGHT_MOTOR_BACKWARD);
 }
 
-void andaReComDelay(int d){
+void anda_re(int d){
   para();
   LEFT_MOTOR->run(LEFT_MOTOR_BACKWARD);
   RIGHT_MOTOR->run(RIGHT_MOTOR_BACKWARD);

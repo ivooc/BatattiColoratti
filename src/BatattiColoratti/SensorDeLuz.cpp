@@ -36,7 +36,7 @@ void DetectaCorEmSerial(){
   //delay(1000);
  
   // Subtrai a iluminação ambiente dos valores das cores
-  int redOutput = redReflected - environmentBrightness;
+   int redOutput = redReflected - environmentBrightness;
   int greenOutput = greenReflected -  environmentBrightness;
   int blueOutput = blueReflected -  environmentBrightness;
 
@@ -90,27 +90,27 @@ char DetectaCor(){
   digitalWrite(GREEN_PIN,  LOW);
   digitalWrite(BLUE_PIN,   LOW);
   delay(100);
-  int redReflected  = analogRead(LDR_PIN);
+  int redOutput  = analogRead(LDR_PIN);
   digitalWrite(RED_PIN,    LOW);
   digitalWrite(GREEN_PIN,  LOW);
   digitalWrite(BLUE_PIN,   HIGH);
   delay(100);
-  int blueReflected = analogRead(LDR_PIN);
+  int blueOutput = analogRead(LDR_PIN);
   digitalWrite(RED_PIN,    LOW);
   digitalWrite(GREEN_PIN,  HIGH);
   digitalWrite(BLUE_PIN,   LOW);
   delay(100);
-  int greenReflected  = analogRead(LDR_PIN);
+  int greenOutput  = analogRead(LDR_PIN);
   digitalWrite(RED_PIN,    LOW);
   digitalWrite(GREEN_PIN,  LOW);
   digitalWrite(BLUE_PIN,   LOW);
   //delay(100);
  
   // Subtrai a iluminação ambiente dos valores das cores
-  int redOutput = redReflected - environmentBrightness;
-  int greenOutput = greenReflected -  environmentBrightness;
-  int blueOutput = blueReflected -  environmentBrightness;
-
+  // int redOutput = redReflected - environmentBrightness;
+  //int greenOutput = greenReflected -  environmentBrightness;
+  //int blueOutput = blueReflected -  environmentBrightness;
+//ta
 
   // Algoritmo que calcula a cor
   if(blueOutput > redOutput && blueOutput > greenOutput){

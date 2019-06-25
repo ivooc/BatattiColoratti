@@ -6,6 +6,7 @@
 //#include "Arduino.h"
 #include "Tarefas.h"
 #include "SensorDeLuz.h"
+#include "MaquinaDeEstados.h"
 
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
@@ -35,6 +36,7 @@ void leftMotorInterruptHandler()
 
 void setup()
 {
+  
   lcd.begin(16, 2);
   Serial.begin(115200);
   attachInterrupt(digitalPinToInterrupt(LEFT_ENCODER_PIN), leftMotorInterruptHandler , RISING );
@@ -42,22 +44,47 @@ void setup()
   SETUP_MOVIMENTACAO();
   LEFT_MOTOR->setSpeed(DEFAULT_LEFT_PWM_SPEED);
   RIGHT_MOTOR->setSpeed(DEFAULT_RIGHT_PWM_SPEED);
+  pinMode(15,INPUT); //LDR DE INICIO
+  
+
 } 
 
 void loop()
 {
+  int estadoAtual = LOCALIZA;
   int button = 5;
   button = read_LCD_buttons();
   lcd.setCursor(0, 0);
   lcd.print("Liguei");
   if (button == btnRIGHT)
   {
+    lcd.clear();
     lcd.setCursor(0, 0);
-    lcd.print("START ");
-    delay(200);
-    lcd.setCursor(0, 1);
-    lcd.print("Rodando ");
-    Tarefas::SegueLinha();
+    lcd.print("Aguardando Partida");
+    int start = analogRead(15);
+    while(start < 700){
+      start = analogRead(15);
+      Serial.println(start);
+      }
+  
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Luz detectada");
+      double startTime = millis();
+      double elapsedTime = 0;
+      elapsedTime = millis() - startTime;
+      while(elapsedTime<60000)
+      {
+        lcd.clear();
+        lcd.setCursor(0, 1);
+        lcd.print(estadoAtual);
+        estadoAtual = MaquinaDeEstados(estadoAtual);  
+        elapsedTime = millis() - startTime;
+      }
+
+      para();
+   
+    
   }
 }
 
@@ -69,5 +96,3 @@ void testeLArgada()
   Serial.println(AconteceuLargada());
   }
 }
-
-
