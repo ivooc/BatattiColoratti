@@ -1,6 +1,5 @@
 #include "Menu.h"
 #include "Configuracao.h"
-#include <LiquidCrystal.h>
 
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
@@ -19,6 +18,52 @@ int read_LCD_buttons() {
   return btnNONE;  // when all others fail, return this...
 }
 
+void lcdPrintLinhaCIMA(char param) {
+    lcd.setCursor(0, 0);
+    lcd.print(param);
+}
+void lcdPrintLinhaCIMA(int param) {
+    lcd.setCursor(0, 0);
+    lcd.print(param);
+}
+void lcdPrintLinhaCIMA(long param) {
+    lcd.setCursor(0, 0);
+    lcd.print(param);
+}
+void lcdPrintLinhaCIMA(String param) {
+    lcd.setCursor(0, 0);
+    lcd.print(param);
+}
+
+
+void lcdPrintLinhaBAIXO(char param) {
+    lcd.setCursor(0, 1);
+    lcd.print(param);
+}
+void lcdPrintLinhaBAIXO(int param) {
+    lcd.setCursor(0, 1);
+    lcd.print(param);
+}
+void lcdPrintLinhaBAIXO(long param) {
+    lcd.setCursor(0, 1);
+    lcd.print(param);
+}
+void lcdPrintLinhaBAIXO(String param) {
+    lcd.setCursor(0, 1);
+    lcd.print(param);
+}
+
+void lcdClearLinhaCIMA() {
+    lcd.setCursor(0, 0);
+    lcd.print("                ");
+}
+
+void lcdClearLinhaBAIXO() {
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+}
+
+
 void Menu() {
-    
+
 }
