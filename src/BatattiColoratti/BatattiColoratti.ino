@@ -34,38 +34,4 @@ void setup()
 void loop()
 {
   Menu();
-  /*int estadoAtual = LOCALIZA;
-  int button = 5;
-  button = read_LCD_buttons();
-  lcd.setCursor(0, 0);
-  lcd.print("Liguei");
-  if (button == btnRIGHT)
-  { 
-
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("Aguardando Partida");
-    int start = analogRead(LDR_LARGADA);
-    while(start < 700){
-      start = analogRead(LDR_LARGADA);
-      Serial.println(start);
-      }
-  
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("Luz detectada");
-      double startTime = millis();
-      double elapsedTime = 0;
-      elapsedTime = millis() - startTime;
-      while(elapsedTime<60000)
-      {
-        lcd.clear();
-        lcd.setCursor(0, 1);
-        lcd.print(estadoAtual);
-        estadoAtual = MaquinaDeEstados(estadoAtual);  
-        elapsedTime = millis() - startTime;
-      }
-      para();
-
-  }*/
 }
