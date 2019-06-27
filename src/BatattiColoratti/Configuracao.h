@@ -7,18 +7,18 @@
 
 /*      LED E LDR    */
 // Pinos dos LEDs
-const int RED_PIN   = 23; // Fio vermelho
-const int GREEN_PIN = 25; // Fio azul
+const int RED_PIN   = 25; // Fio vermelho
+const int GREEN_PIN = 23; // Fio azul
 const int BLUE_PIN  = 27; // Fio laranja; Fio marrom é o terra
 // Pino do LDR
 const int LDR_PIN = A8; // VCC=vermelho, GND=marrom, SIG(A8)=amarelo
 		
 /*      LUZ E LUMINOSA   */		
-const int THRESHOLD_OBSTACULO_DE_LUZ = 150;
+const int THRESHOLD_OBSTACULO_DE_LUZ = 90;
 
 /*      CORES        */
-const char yellow = 'C';
-const char black = 'D';
+const char yellow = 'Y';
+const char black = 'X';
 const char blue  = 'B';
 const char red    = 'R';
 const char green = 'G';
@@ -32,8 +32,8 @@ const int RIGHT_MOTOR_INPUT = 2; // FIO PRETO PRIMEIRO
 #define RIGHT_MOTOR_BACKWARD FORWARD
 
 /*       VELOCIDADES     */
-#define DEFAULT_LEFT_PWM_SPEED 148
-#define DEFAULT_RIGHT_PWM_SPEED 152
+#define DEFAULT_LEFT_PWM_SPEED 175
+#define DEFAULT_RIGHT_PWM_SPEED 160 //152  //160
 #define DEFAULT_LEFT_LINEAR_SPEED 1
 #define DEFAULT_RIGHT_LINEAR_SPEED 1
 #define DEFAULT_LEFT_ANGULAR_SPEED 3
@@ -61,12 +61,13 @@ const int RIGHT_MOTOR_INPUT = 2; // FIO PRETO PRIMEIRO
 
 // CONSTANTES DE PILHA
 #define TEMPO_ANDA 91
-#define TEMPO_GIRA 205
+#define TEMPO_GIRA 170   // PILHA NOVA 170
 
 // CONSTANTES DE SEGUIDOR DE LINHA
 #define LEFT_RPM 10 // ESSE VALOR NÃO FOI TESTADO, PROVAVELMENTE PRECISARÁ SER MODIFICADO
 #define RIGHT_RPM 10 // ESSE VALOR NÃO FOI TESTADO, PROVAVELMENTE PRECISARÁ SER MODIFICADO
 #define TURNING_FACTOR 0.0 // COEFICIENTE DE REDUÇÃO DE VELOCIDADE PARA A REALIZAÇÃO DA CURVA - VALOR TBM NÃO TESTADO
+#define REVERSE_FACTOR 0.5 // COEFICIENTE DE REDUÇÃO DE VELOCIDADE AO GIRAR HORARIO/ANTI-HORARIO
 #define LIMIAR_LINHA 500 // LIMIAR DE INTENSIDADE LUMINOSA DO IR QUANDO ESTA MRIANDO NA FOLHA DE PAPEL
 #define ESQ_LINHA 1
 #define DIR_LINHA 2
@@ -99,6 +100,10 @@ const int VOLTAS_EM_360 = 167;
 #define GIRAMENOS60 10  
 #define RETORNABASE 11 
 #define RECUABASE 12
+#define SAIDABASE 13
+#define GIRA1802 14
+#define SAIDABASE2 15
+
 
 // PINO DO LDR DE LARGADA
 #define LDR_LARGADA 15

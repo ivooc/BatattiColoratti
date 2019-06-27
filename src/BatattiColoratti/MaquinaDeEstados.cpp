@@ -33,9 +33,16 @@ int Gira180(){
 
 	gira_sentido_antihorario(12);
 
-	return SEGUELINHA;
+	return SAIDABASE;
 }
 
+int SaiDaBase(){
+
+  set_speed(DEFAULT_LEFT_PWM_SPEED*1.2, DEFAULT_RIGHT_PWM_SPEED*1.2);
+  anda(35);
+
+  return SEGUELINHA;
+}
 
 int SegueLinha(){
 	lcd9.begin(16, 2);
@@ -55,20 +62,19 @@ int SegueLinha(){
 int OlhaCor(){
 
 
-  	digitalWrite(RED_PIN, LOW);
-  	digitalWrite(GREEN_PIN, LOW);
-  	digitalWrite(BLUE_PIN, LOW);
+  	//digitalWrite(RED_PIN, LOW);
+  	//digitalWrite(GREEN_PIN, LOW);
+  	//digitalWrite(BLUE_PIN, LOW);
   	delay(100);
-
-
-	char cor = DetectaCor();
-
-	digitalWrite(RED_PIN, HIGH);
-  	digitalWrite(GREEN_PIN, HIGH);
-  	digitalWrite(BLUE_PIN, HIGH);
+	  char cor = DetectaCor();
+  
+    //delay(500);
+  	//digitalWrite(RED_PIN, HIGH);
+  	//digitalWrite(GREEN_PIN, HIGH);
+  	//digitalWrite(BLUE_PIN, HIGH);
   	delay(10);
 	
-	if(cor == black || cor == yellow){
+	if(cor == black ){
 
 		return RECUA; 
 	}else {
@@ -89,7 +95,7 @@ int GiraBase(){
 
 int RetornaBase(){
 
-	anda(30);
+	anda(60);
 
 	return RECUABASE;
 }
@@ -98,11 +104,20 @@ int RecuaBase(){
 
 	anda_re(10);
 
-	return GIRA180;
+	return GIRA1802;
 }
 
+int Gira1802(){
 
+  gira_sentido_antihorario(12);
+  return SAIDABASE2;
+}
 
+int SaiDaBase2(){
+
+  anda(20);
+  return SEGUELINHA;
+}
 int Recua(){
 
 	anda_re(10);
@@ -112,7 +127,7 @@ int Recua(){
 
 int Gira60(){
 
-	gira_sentido_horario(4);
+	gira_sentido_horario(2);
 
 	return ANDARETO;
 }
@@ -127,8 +142,8 @@ int GiraMenos60(){
 
 int AndaReto(){
 
-
-	anda(4);
+  set_speed(DEFAULT_LEFT_PWM_SPEED, DEFAULT_RIGHT_PWM_SPEED);
+	anda(12);
 
 	return GIRAMENOS60;
 }
@@ -174,7 +189,16 @@ int MaquinaDeEstados(int estadoAtual){
 			break;	
 		case OLHACOR:
 			proximoEstado = OlhaCor();
-			break;			 
+			break;			
+    case SAIDABASE:
+      proximoEstado = SaiDaBase();
+      break; 
+    case SAIDABASE2:
+      proximoEstado = SaiDaBase2();
+      break;
+    case GIRA1802:
+      proximoEstado = Gira1802();
+      break;
 
 
 	}

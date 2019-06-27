@@ -26,7 +26,11 @@ void andaReComDelay();
 
 void GiraHorario();
 
+void GiraHorarioComFator();
+
 void GiraAntiHorario();
+
+void GiraAntiHorarioComFator();
 
 void gira_sentido_horario(double t);
 
