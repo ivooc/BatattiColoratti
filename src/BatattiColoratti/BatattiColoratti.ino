@@ -3,34 +3,13 @@
 #include "Localizacao.h"
 #include "Encoder.h"
 #include <LiquidCrystal.h>
-//#include "Arduino.h"
 #include "Tarefas.h"
 #include "SensorDeLuz.h"
 #include "MaquinaDeEstados.h"
+#include "Menu.h"
 
-LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
+extern LiquidCrystal lcd;
 
-int read_LCD_buttons() {
-  int adc_key_in = analogRead(0);      // read the value from the sensor
-  if (adc_key_in > 1000) return btnNONE; // We make this the 1st option for speed reasons since it will be the most likely result
-
-  if (adc_key_in < 50)   return btnRIGHT;
-  if (adc_key_in < 195)  return btnUP;
-  if (adc_key_in < 380)  return btnDOWN;
-  if (adc_key_in < 555)  return btnLEFT;
-  if (adc_key_in < 790)  return btnSELECT;
-
-  return btnNONE;  // when all others fail, return this...
-}
-
-int luz_ambiente;
-
-int DetectaObjetoTeste(){
-
-  int LUZ_ATUAL = analogRead(LDR_PIN);
-  return (luz_ambiente - LUZ_ATUAL );
-  //return (LUZ_ATUAL > THRESHOLD_OBSTACULO_DE_LUZ);
-}
 
 void rightMotorInterruptHandler()
 {
@@ -45,7 +24,6 @@ void leftMotorInterruptHandler()
 
 void setup()
 {
-  
   lcd.begin(16, 2);
   Serial.begin(115200);
   attachInterrupt(digitalPinToInterrupt(LEFT_ENCODER_PIN), leftMotorInterruptHandler , RISING );
@@ -54,14 +32,10 @@ void setup()
   SETUP_MOVIMENTACAO();
   LEFT_MOTOR->setSpeed(DEFAULT_LEFT_PWM_SPEED);
   RIGHT_MOTOR->setSpeed(DEFAULT_RIGHT_PWM_SPEED);
-  luz_ambiente = analogRead(LDR_PIN);
-
 } 
 
 void loop()
 {
-  //Serial.println(DetectaObjetoTeste());
-  //delay(10);
   int estadoAtual = LOCALIZA;
   int button = 5;
   button = read_LCD_buttons();
@@ -95,13 +69,5 @@ void loop()
       }
       para();
 
-  }
-}
-
-
-void testeLArgada()
-{
-  while(true){
-    Serial.println(AconteceuLargada());
   }
 }
