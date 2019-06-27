@@ -1,9 +1,10 @@
 #include "Menu.h"
 #include "Configuracao.h"
+#include "SensorDeLuz.h"
 
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
-TelasMenu TelaMenu = INICIAL;
+TelasMenu TelaMenu = INICIAL_pg1;
 
 int read_LCD_buttons() {
   int adc_key_in = analogRead(0);      // read the value from the sensor
@@ -65,5 +66,62 @@ void lcdClearLinhaBAIXO() {
 
 
 void Menu() {
-    // TODO
+    int button = 5;
+    button = read_LCD_buttons();
+    switch(TelaMenu) {
+        case INICIAL_pg1:
+            lcdPrintLinhaCIMA("Menu Inicial");
+            lcd.setCursor(13, 0);
+            lcd.print(TelaMenu);
+            lcdPrintLinhaBAIXO("  1-Calibrar   >");
+            if (button == btnRIGHT){
+                TelaMenu = INICIAL_pg2;
+                delay(btnDELAY);
+            }
+            else if (button == btnDOWN){
+                TelaMenu = CALIBRACAO;
+                delay(btnDELAY);
+            }
+            break;
+        case INICIAL_pg2:
+            lcdPrintLinhaCIMA("Menu Inicial");
+            lcd.setCursor(13, 0);
+            lcd.print(TelaMenu);
+            lcdPrintLinhaBAIXO("< 2-Ag. Largada ");
+            if (button == btnLEFT){
+                TelaMenu = INICIAL_pg1;
+                delay(btnDELAY);
+            }
+            else if (button == btnSELECT){
+                TelaMenu = CALIBRACAO;
+                delay(btnDELAY);
+            }
+            break;
+        case CALIBRACAO:
+            lcdPrintLinhaCIMA("Calibracao  ");
+            lcd.setCursor(13, 0);
+            lcd.print(TelaMenu);
+            lcdPrintLinhaBAIXO("Press. Select  ^");
+            if (button == btnUP){
+                TelaMenu = INICIAL_pg1;
+                delay(btnDELAY);
+            }
+            else if (button == btnSELECT){
+                lcdClearLinhaBAIXO();
+                lcdPrintLinhaBAIXO("Calibrando...");
+                delay(1000);
+                setIntensidadeLuzAmbiente();
+                lcdClearLinhaCIMA();
+                lcdPrintLinhaCIMA("Calibrado!");
+                lcd.setCursor(11, 0);
+                lcd.print(getIntensidadeLuzAmbiente());
+                lcdClearLinhaBAIXO();
+                lcdPrintLinhaBAIXO("Pronto partida");
+                delay(3000);
+                TelaMenu = INICIAL_pg2;
+            }
+            break;
+        case LARGADA:
+            break;
+    }
 }

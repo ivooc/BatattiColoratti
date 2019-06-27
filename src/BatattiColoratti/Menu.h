@@ -7,7 +7,8 @@
 extern LiquidCrystal lcd;
 
 enum TelasMenu {
-  INICIAL,
+  INICIAL_pg1,
+  INICIAL_pg2,
   CALIBRACAO,
   LARGADA
 };

@@ -148,7 +148,7 @@ void SENSORDELUZ_SETUP(){
   pinMode(GREEN_PIN, OUTPUT);
   pinMode(BLUE_PIN, OUTPUT);
   pinMode(LDR_PIN, INPUT);
-  INTENSIDADE_LUZ_AMBIENTE = analogRead(LDR_PIN);
+  //INTENSIDADE_LUZ_AMBIENTE = analogRead(LDR_PIN);
   // initialize serial communication with computer:
   //digitalWrite(RED_PIN, HIGH);
   //digitalWrite(GREEN_PIN, HIGH);
@@ -159,4 +159,12 @@ void SENSORDELUZ_SETUP(){
 bool AconteceuLargada()
 {
   return digitalRead(LARGADA_PINO)==HIGH;
+}
+
+void setIntensidadeLuzAmbiente() {
+  INTENSIDADE_LUZ_AMBIENTE = analogRead(LDR_PIN);
+}
+
+int getIntensidadeLuzAmbiente() {
+  return INTENSIDADE_LUZ_AMBIENTE;
 }

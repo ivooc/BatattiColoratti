@@ -29,12 +29,11 @@ void setup()
   SETUP_MOVIMENTACAO();
   LEFT_MOTOR->setSpeed(DEFAULT_LEFT_PWM_SPEED);
   RIGHT_MOTOR->setSpeed(DEFAULT_RIGHT_PWM_SPEED);
-  lcdPrintLinhaCIMA("mission passed");
-  lcdPrintLinhaBAIXO("respect+");
 } 
 
 void loop()
 {
+  Menu();
   /*int estadoAtual = LOCALIZA;
   int button = 5;
   button = read_LCD_buttons();

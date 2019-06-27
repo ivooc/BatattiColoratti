@@ -11,4 +11,8 @@ char DetectaCor();
 
 void SENSORDELUZ_SETUP();
 
+void setIntensidadeLuzAmbiente();
+
+int getIntensidadeLuzAmbiente();
+
 #endif
