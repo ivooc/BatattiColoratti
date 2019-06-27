@@ -8,6 +8,8 @@
 
 LiquidCrystal lcd99(8, 9, 4, 5, 6, 7);
 
+int SegueLinhaFlag = 0;
+
 void Tarefas::ex1() {
   anda(30);
   gira_sentido_horario(12);
@@ -147,4 +149,20 @@ int Tarefas::SegueLinha(int flagAnterior){
       int readFlag = SeguidorDeLinha::Seguir(analogRead(LEFT_LINE_SENSOR_PIN), analogRead(RIGHT_LINE_SENSOR_PIN), flagAnterior);
       delay(100);
       return readFlag;
+}
+
+void Tarefas::SegueLinha(){
+      int readFlag = SeguidorDeLinha::Seguir(analogRead(LEFT_LINE_SENSOR_PIN), analogRead(RIGHT_LINE_SENSOR_PIN), Tarefas::GetFlagLinha());
+      delay(100);
+      SetarFlagLinha(readFlag);
+}
+
+void Tarefas::SetarFlagLinha(int val)
+{
+  SegueLinhaFlag = val;
+}
+
+int Tarefas::GetFlagLinha()
+{
+  return SegueLinhaFlag;
 }

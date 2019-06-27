@@ -40,6 +40,7 @@ void anda(int d)
 {
   LEFT_MOTOR->run(LEFT_MOTOR_FORWARD);
   RIGHT_MOTOR->run(RIGHT_MOTOR_FORWARD);
+  d=d*TEMPO_ANDA;
   delay(d);
 }
 
@@ -62,6 +63,16 @@ void GiraHorario()
 {
   para();
   //set_speed(int left_speed, int right_speed);
+  set_speed(DEFAULT_LEFT_PWM_SPEED, DEFAULT_RIGHT_PWM_SPEED);
+  LEFT_MOTOR->run(LEFT_MOTOR_FORWARD);
+  RIGHT_MOTOR->run(RIGHT_MOTOR_BACKWARD);
+}
+
+void GiraHorarioComFator()
+{
+  para();
+  //set_speed(int left_speed, int right_speed);
+  set_speed(DEFAULT_LEFT_PWM_SPEED, DEFAULT_RIGHT_PWM_SPEED*REVERSE_FACTOR);
   LEFT_MOTOR->run(LEFT_MOTOR_FORWARD);
   RIGHT_MOTOR->run(RIGHT_MOTOR_BACKWARD);
 }
@@ -70,12 +81,23 @@ void GiraAntiHorario()
 {
   para();
   //set_speed(int left_speed, int right_speed);
+  set_speed(DEFAULT_LEFT_PWM_SPEED, DEFAULT_RIGHT_PWM_SPEED);
+  LEFT_MOTOR->run(LEFT_MOTOR_BACKWARD);
+  RIGHT_MOTOR->run(RIGHT_MOTOR_FORWARD);
+}
+
+void GiraAntiHorarioComFator()
+{
+  para();
+  //set_speed(int left_speed, int right_speed);
+  set_speed(DEFAULT_LEFT_PWM_SPEED*REVERSE_FACTOR, DEFAULT_RIGHT_PWM_SPEED);
   LEFT_MOTOR->run(LEFT_MOTOR_BACKWARD);
   RIGHT_MOTOR->run(RIGHT_MOTOR_FORWARD);
 }
 
 void gira_sentido_horario(double t){
   para();
+  set_speed(DEFAULT_LEFT_PWM_SPEED, DEFAULT_RIGHT_PWM_SPEED);
   LEFT_MOTOR->run(LEFT_MOTOR_FORWARD);
   RIGHT_MOTOR->run(RIGHT_MOTOR_BACKWARD);
   t=t*TEMPO_GIRA;
@@ -85,6 +107,7 @@ void gira_sentido_horario(double t){
 
 void gira_sentido_antihorario(double t){
   para();
+  set_speed(DEFAULT_LEFT_PWM_SPEED, DEFAULT_RIGHT_PWM_SPEED);
   LEFT_MOTOR->run(LEFT_MOTOR_BACKWARD);
   RIGHT_MOTOR->run(RIGHT_MOTOR_FORWARD);
   t=t*TEMPO_GIRA;

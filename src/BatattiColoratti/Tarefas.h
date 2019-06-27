@@ -21,6 +21,12 @@ namespace Tarefas {
 	void PercorreTriangulo(int dist);
 	
 	int SegueLinha(int);
+
+	void SegueLinha();
+
+	void SetarFlagLinha(int val);
+
+	int GetFlagLinha();
 }
 
 

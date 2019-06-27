@@ -23,6 +23,15 @@ int read_LCD_buttons() {
   return btnNONE;  // when all others fail, return this...
 }
 
+int luz_ambiente;
+
+int DetectaObjetoTeste(){
+
+  int LUZ_ATUAL = analogRead(LDR_PIN);
+  return (luz_ambiente - LUZ_ATUAL );
+  //return (LUZ_ATUAL > THRESHOLD_OBSTACULO_DE_LUZ);
+}
+
 void rightMotorInterruptHandler()
 {
   encoderMotorDireita.IncrementaVoltas();
@@ -41,29 +50,32 @@ void setup()
   Serial.begin(115200);
   attachInterrupt(digitalPinToInterrupt(LEFT_ENCODER_PIN), leftMotorInterruptHandler , RISING );
   attachInterrupt(digitalPinToInterrupt(RIGHT_ENCODER_PIN), rightMotorInterruptHandler , RISING );
+  SENSORDELUZ_SETUP();
   SETUP_MOVIMENTACAO();
   LEFT_MOTOR->setSpeed(DEFAULT_LEFT_PWM_SPEED);
   RIGHT_MOTOR->setSpeed(DEFAULT_RIGHT_PWM_SPEED);
-  pinMode(15,INPUT); //LDR DE INICIO
-  
+  luz_ambiente = analogRead(LDR_PIN);
 
 } 
 
 void loop()
 {
+  //Serial.println(DetectaObjetoTeste());
+  //delay(10);
   int estadoAtual = LOCALIZA;
   int button = 5;
   button = read_LCD_buttons();
   lcd.setCursor(0, 0);
   lcd.print("Liguei");
   if (button == btnRIGHT)
-  {
+  { 
+
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("Aguardando Partida");
-    int start = analogRead(15);
+    int start = analogRead(LDR_LARGADA);
     while(start < 700){
-      start = analogRead(15);
+      start = analogRead(LDR_LARGADA);
       Serial.println(start);
       }
   
@@ -81,10 +93,8 @@ void loop()
         estadoAtual = MaquinaDeEstados(estadoAtual);  
         elapsedTime = millis() - startTime;
       }
-
       para();
-   
-    
+
   }
 }
 
@@ -92,7 +102,6 @@ void loop()
 void testeLArgada()
 {
   while(true){
-
-  Serial.println(AconteceuLargada());
+    Serial.println(AconteceuLargada());
   }
 }

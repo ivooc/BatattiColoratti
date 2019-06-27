@@ -7,13 +7,11 @@ LiquidCrystal lcd5(8, 9, 4, 5, 6, 7);
 
 int SeguidorDeLinha::Seguir (int esquerda, int direita, int flag){
   lcd5.clear();
-  lcd5.setCursor(0, 1);
-  lcd5.print(flag);
-  lcd5.setCursor(1, 0);
-  lcd5.print(flag);
-  Serial.println(flag);
+  lcd5.setCursor(7, 1);
+  lcd5.print(esquerda);
+  lcd5.setCursor(12, 1);
+  lcd5.print(direita);
 	if(esquerda < LIMIAR_LINHA && direita < LIMIAR_LINHA){
-
     lcd5.setCursor(0, 0);
     lcd5.print("Reto");
 		set_speed(DEFAULT_LEFT_PWM_SPEED, DEFAULT_RIGHT_PWM_SPEED); //SE OS DOIS ESTIVEREM DENTRO DA LINHA, O ROBO ANDARÁ PARA FRENTE
@@ -26,7 +24,7 @@ int SeguidorDeLinha::Seguir (int esquerda, int direita, int flag){
     lcd5.print("Vira Direita");
 		//setControledRPMSpeed(DEFAULT_LEFT_PWM_SPEED, DEFAULT_RIGHT_PWM_SPEED*TURNING_FACTOR);
 		set_speed(DEFAULT_LEFT_PWM_SPEED, DEFAULT_RIGHT_PWM_SPEED*TURNING_FACTOR);
-		RIGHT_MOTOR->run(RIGHT_MOTOR_FORWARD);
+		RIGHT_MOTOR->run(RIGHT_MOTOR_BACKWARD);
     LEFT_MOTOR->run(LEFT_MOTOR_FORWARD);
     return 2;
 
@@ -36,17 +34,17 @@ int SeguidorDeLinha::Seguir (int esquerda, int direita, int flag){
 		//setControledRPMSpeed(DEFAULT_LEFT_PWM_SPEED*TURNING_FACTOR, DEFAULT_RIGHT_PWM_SPEED);
 		set_speed(DEFAULT_LEFT_PWM_SPEED*TURNING_FACTOR, DEFAULT_RIGHT_PWM_SPEED);
 		RIGHT_MOTOR->run(RIGHT_MOTOR_FORWARD);
-    LEFT_MOTOR->run(LEFT_MOTOR_FORWARD);
+    LEFT_MOTOR->run(LEFT_MOTOR_BACKWARD);
     return 1;
 
-	}else { //SE OS 2 LADOS ESTIVEREM FORA DA LINHA O ROBO GIRA NO PRÓPRIO EIXO PROCURANDO UMA LINHA
+	}else {
     
     if (flag == 1)
     {
     lcd5.setCursor(0, 0);
     lcd5.print("Reverse Esquerda");
       //setControledRPMSpeed(DEFAULT_LEFT_PWM_SPEED, -DEFAULT_RIGHT_PWM_SPEED);
-      GiraAntiHorario();
+      GiraAntiHorarioComFator();
       return 1;
     }
     else
@@ -54,7 +52,7 @@ int SeguidorDeLinha::Seguir (int esquerda, int direita, int flag){
     lcd5.setCursor(0, 0);
     lcd5.print("Reverse Direita");
       //setControledRPMSpeed(DEFAULT_LEFT_PWM_SPEED, -DEFAULT_RIGHT_PWM_SPEED);
-      GiraHorario();
+      GiraHorarioComFator();
       return 2;
     }
 		

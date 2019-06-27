@@ -2,7 +2,7 @@
 #include "Arduino.h"
 #include "Configuracao.h"
 
-int INTENISADE_LUZ_AMBIENTE = 0;
+int INTENSIDADE_LUZ_AMBIENTE = 0;
 
 void DetectaCorEmSerial(){
   String virg = " , ";
@@ -51,8 +51,15 @@ void DetectaCorEmSerial(){
 
   // Algoritmo que calcula a cor
   if(blueOutput > redOutput && blueOutput > greenOutput){
+    if(blueOutput*0.7 > redOutput && blueOutput*0.7 > greenOutput){
 
-    Serial.println("BLUE");
+        Serial.println("BLUE");
+      
+    }else{
+
+      Serial.println("BLACK");
+    }
+     
   }else if(greenOutput > redOutput && greenOutput > blueOutput){
 
     Serial.println("GREEN");
@@ -73,9 +80,10 @@ void DetectaCorEmSerial(){
 }
 
 bool DetectaObjeto(){
+
   int LUZ_ATUAL = analogRead(LDR_PIN);
-  //return (LUZ_ATUAL - INTENISADE_LUZ_AMBIENTE < THRESHOLD_OBSTACULO_DE_LUZ);
-  return (LUZ_ATUAL < THRESHOLD_OBSTACULO_DE_LUZ);
+  return (INTENSIDADE_LUZ_AMBIENTE - LUZ_ATUAL > THRESHOLD_OBSTACULO_DE_LUZ);
+  //return (LUZ_ATUAL > THRESHOLD_OBSTACULO_DE_LUZ);
 }
 
 char DetectaCor(){
@@ -90,31 +98,39 @@ char DetectaCor(){
   digitalWrite(GREEN_PIN,  LOW);
   digitalWrite(BLUE_PIN,   LOW);
   delay(100);
-  int redOutput  = analogRead(LDR_PIN);
+  int redReflected  = analogRead(LDR_PIN);
   digitalWrite(RED_PIN,    LOW);
   digitalWrite(GREEN_PIN,  LOW);
   digitalWrite(BLUE_PIN,   HIGH);
   delay(100);
-  int blueOutput = analogRead(LDR_PIN);
+  int blueReflected = analogRead(LDR_PIN);
   digitalWrite(RED_PIN,    LOW);
   digitalWrite(GREEN_PIN,  HIGH);
   digitalWrite(BLUE_PIN,   LOW);
   delay(100);
-  int greenOutput  = analogRead(LDR_PIN);
+  int greenReflected  = analogRead(LDR_PIN);
   digitalWrite(RED_PIN,    LOW);
   digitalWrite(GREEN_PIN,  LOW);
   digitalWrite(BLUE_PIN,   LOW);
   //delay(100);
- 
+
   // Subtrai a iluminação ambiente dos valores das cores
-  // int redOutput = redReflected - environmentBrightness;
-  //int greenOutput = greenReflected -  environmentBrightness;
-  //int blueOutput = blueReflected -  environmentBrightness;
+   int redOutput = redReflected - environmentBrightness;
+  int greenOutput = greenReflected -  environmentBrightness;
+  int blueOutput = blueReflected -  environmentBrightness;
 //ta
 
   // Algoritmo que calcula a cor
   if(blueOutput > redOutput && blueOutput > greenOutput){
-    return blue;
+    if(blueOutput*0.7 > redOutput && blueOutput*0.7 > greenOutput){
+
+      return blue;
+      
+    }else{
+
+      return black;
+    }
+
   }else if(greenOutput > redOutput && greenOutput > blueOutput){
     return green;
   }else if(redOutput*0.55 > greenOutput){ //PARAMETRO RED YELLOW
@@ -132,9 +148,12 @@ void SENSORDELUZ_SETUP(){
   pinMode(GREEN_PIN, OUTPUT);
   pinMode(BLUE_PIN, OUTPUT);
   pinMode(LDR_PIN, INPUT);
-  INTENISADE_LUZ_AMBIENTE = analogRead(LDR_PIN);
+  INTENSIDADE_LUZ_AMBIENTE = analogRead(LDR_PIN);
   // initialize serial communication with computer:
-  Serial.begin(115200);
+  //digitalWrite(RED_PIN, HIGH);
+  //digitalWrite(GREEN_PIN, HIGH);
+  //digitalWrite(BLUE_PIN, HIGH);
+
 }
 
 bool AconteceuLargada()
