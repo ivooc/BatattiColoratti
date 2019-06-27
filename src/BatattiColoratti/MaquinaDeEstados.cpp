@@ -4,23 +4,7 @@
 #include "SensorDeLuz.h"
 #include "MaquinaDeEstados.h"
 #include "Arduino.h"
-#include <LiquidCrystal.h>
-
-LiquidCrystal lcd9(8, 9, 4, 5, 6, 7);
-
-//int SegueLinha_flag = 0 ;
-/*
-int Inicio(){
-
-	if(start == 1){
-
-		return LOCALIZA;
-	}else 
-
-	return INICIO;
-}
-*/
-
+#include "Menu.h"
 
 int Localiza(){
 
@@ -45,10 +29,9 @@ int SaiDaBase(){
 }
 
 int SegueLinha(){
-	lcd9.begin(16, 2);
-	lcd9.setCursor(8, 1);
 	if(DetectaObjeto()){
-		lcd9.print("DETECTEI");
+		lcd.setCursor(8, 1);
+		lcd.print("DETECTEI");
 		para();
 		return OLHACOR;
 	}else {
@@ -154,9 +137,6 @@ int MaquinaDeEstados(int estadoAtual){
 
 	switch(estadoAtual) {
 
-	//	case INICIO:
-		//	proximoEstado = Inicio();
-		//	break;
 		case LOCALIZA:
 			proximoEstado = Localiza();
 			break; 
@@ -190,20 +170,15 @@ int MaquinaDeEstados(int estadoAtual){
 		case OLHACOR:
 			proximoEstado = OlhaCor();
 			break;			
-    case SAIDABASE:
-      proximoEstado = SaiDaBase();
-      break; 
-    case SAIDABASE2:
-      proximoEstado = SaiDaBase2();
-      break;
-    case GIRA1802:
-      proximoEstado = Gira1802();
-      break;
-
-
+    	case SAIDABASE:
+      		proximoEstado = SaiDaBase();
+      		break; 
+    	case SAIDABASE2:
+      		proximoEstado = SaiDaBase2();
+      		break;
+    	case GIRA1802:
+      		proximoEstado = Gira1802();
+      		break;
 	}
-
-
-return proximoEstado;
-
+	return proximoEstado;
 }

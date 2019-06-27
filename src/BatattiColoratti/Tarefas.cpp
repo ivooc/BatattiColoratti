@@ -4,9 +4,7 @@
 #include "Localizacao.h"
 #include "Tarefas.h"
 #include "Encoder.h"
-#include <LiquidCrystal.h>
-
-LiquidCrystal lcd99(8, 9, 4, 5, 6, 7);
+#include "Menu.h"
 
 int SegueLinhaFlag = 0;
 
@@ -48,7 +46,6 @@ void Tarefas::ex4() {
 
 void Tarefas::AlinhaComLampada()
 {
-  lcd99.begin(16, 2);
   int LIMIAR_ALTO = 512;
   int LIMIAR_BAIXO = 512;
   Localizacao localizar(DIFERENTIAL_SENSOR_PIN);
@@ -70,10 +67,10 @@ void Tarefas::AlinhaComLampada()
     sinal = int(localizar.RetornaSinal());
     //voltasDadas = encoderMotorDireita.RetornaVolta();
     tempoPassado = millis() - tempoSetPoint;
-    //lcd99.setCursor(0, 0);
-    //lcd99.print(voltasDadas);
-    //lcd99.setCursor(8, 0);
-    //lcd99.print(encoderMotorEsquerda.RetornaVolta());
+    //lcd.setCursor(0, 0);
+    //lcd.print(voltasDadas);
+    //lcd.setCursor(8, 0);
+    //lcd.print(encoderMotorEsquerda.RetornaVolta());
     if (sinal > LIMIAR_ALTO)
     {
       LIMIAR_ALTO = sinal;

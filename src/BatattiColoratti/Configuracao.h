@@ -88,7 +88,6 @@ const int VOLTAS_EM_360 = 167;
 
 // ESTADOS DA MAQUINA DE ESTADOS 
 
-#define INICIO 1 
 #define LOCALIZA 2
 #define GIRA180 3 
 #define SEGUELINHA 4

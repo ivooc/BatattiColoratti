@@ -11,7 +11,6 @@ public:
     Localizacao(const int pin, const int numreadings = 20);
     void begin();
     float RetornaSinal();
-    bool EstaAlinhado();
     ~Localizacao();
 };
 

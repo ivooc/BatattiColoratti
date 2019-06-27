@@ -34,12 +34,6 @@ float Localizacao::RetornaSinal()
     return value;
 }
 
-
-bool Localizacao::EstaAlinhado()
-{
-    return true;
-}
-
 Localizacao::~Localizacao()
 {
     delete[] this->readings;
