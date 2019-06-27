@@ -1,6 +1,8 @@
 #include "Menu.h"
 #include "Configuracao.h"
 #include "SensorDeLuz.h"
+#include "MaquinaDeEstados.h"
+#include "Movimentacao.h"
 
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
@@ -66,13 +68,13 @@ void lcdClearLinhaBAIXO() {
 
 
 void Menu() {
+    int estadoAtual = LOCALIZA;
+    unsigned long startTime = 0UL;
     int button = 5;
     button = read_LCD_buttons();
     switch(TelaMenu) {
         case INICIAL_pg1:
             lcdPrintLinhaCIMA("Menu Inicial");
-            lcd.setCursor(13, 0);
-            lcd.print(TelaMenu);
             lcdPrintLinhaBAIXO("  1-Calibrar   >");
             if (button == btnRIGHT){
                 TelaMenu = INICIAL_pg2;
@@ -85,22 +87,18 @@ void Menu() {
             break;
         case INICIAL_pg2:
             lcdPrintLinhaCIMA("Menu Inicial");
-            lcd.setCursor(13, 0);
-            lcd.print(TelaMenu);
             lcdPrintLinhaBAIXO("< 2-Ag. Largada ");
             if (button == btnLEFT){
                 TelaMenu = INICIAL_pg1;
                 delay(btnDELAY);
             }
             else if (button == btnSELECT){
-                TelaMenu = CALIBRACAO;
+                TelaMenu = LARGADA;
                 delay(btnDELAY);
             }
             break;
         case CALIBRACAO:
             lcdPrintLinhaCIMA("Calibracao  ");
-            lcd.setCursor(13, 0);
-            lcd.print(TelaMenu);
             lcdPrintLinhaBAIXO("Press. Select  ^");
             if (button == btnUP){
                 TelaMenu = INICIAL_pg1;
@@ -113,8 +111,6 @@ void Menu() {
                 setIntensidadeLuzAmbiente();
                 lcdClearLinhaCIMA();
                 lcdPrintLinhaCIMA("Calibrado!");
-                lcd.setCursor(11, 0);
-                lcd.print(getIntensidadeLuzAmbiente());
                 lcdClearLinhaBAIXO();
                 lcdPrintLinhaBAIXO("Pronto partida");
                 delay(3000);
@@ -122,6 +118,30 @@ void Menu() {
             }
             break;
         case LARGADA:
+            lcd.clear();
+            lcdPrintLinhaCIMA("BatattiColoratti");
+            lcdPrintLinhaBAIXO("Ag. luz largada!");
+            int start;
+            do {
+                start = analogRead(LDR_LARGADA);
+                delay(1);
+            } while (start < LIMIAR_LARGADA);
+            startTime = millis();
+            lcdClearLinhaBAIXO();
+            lcdPrintLinhaBAIXO("LARGUEI!");
+            do
+            {
+                lcd.setCursor(10, 1);
+                lcd.print(estadoAtual);
+                estadoAtual = MaquinaDeEstados(estadoAtual);
+            } while (millis() - startTime < 60000);
+            para();
+            TelaMenu = ENDGAME;
+            lcd.clear();
+            break;
+        case ENDGAME:
+            lcdPrintLinhaCIMA("MATCH ENDED!");
+            lcdPrintLinhaBAIXO("That's all folks");
             break;
     }
 }

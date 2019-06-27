@@ -10,7 +10,8 @@ enum TelasMenu {
   INICIAL_pg1,
   INICIAL_pg2,
   CALIBRACAO,
-  LARGADA
+  LARGADA,
+  ENDGAME
 };
 
 int read_LCD_buttons();

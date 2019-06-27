@@ -107,4 +107,6 @@ const int VOLTAS_EM_360 = 167;
 // PINO DO LDR DE LARGADA
 #define LDR_LARGADA 15
 
+#define LIMIAR_LARGADA 700
+
 #endif 
